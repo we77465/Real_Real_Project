@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 # Create your views here.
 #def showtemplate(request):
@@ -19,8 +19,10 @@ def showtemplate(request):
     form = AccountForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return redirect('/login')
 
     context = {
         'form' : form
     } # 建立 Dict對應到Vendor的資料，
     return render(request, 'Creates/1022_test.html', context)
+    
