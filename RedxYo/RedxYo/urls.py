@@ -23,5 +23,5 @@ urlpatterns = [
     path('my_app/', include('my_app.urls')),
     path('login/', include('Login.urls'),name='Login'),
     path('create/', include('Create.urls')),
-    path('Test1023/', include('Test1023.urls')),
+    path('Test1023/', include('Test1023.urls'), name = "test123"),
 ]
