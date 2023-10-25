@@ -18,8 +18,8 @@ def home(request):
         form = GeeksForm(request.POST, request.FILES)
         if form.is_valid():
             name = form.cleaned_data['name']
-            hotel_Main_Img = form.cleaned_data['original_img']
-            geeks_object = GeeksModel(name=name, hotel_Main_Img=hotel_Main_Img)
+            original_img = form.cleaned_data['original_img']
+            geeks_object = GeeksModel(name=name, original_img=original_img)
             geeks_object.save()  # date字段将自动设置为当前时间
             return HttpResponse("Data saved successfully.")
     else:
