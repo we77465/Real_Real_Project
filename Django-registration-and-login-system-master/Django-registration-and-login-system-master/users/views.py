@@ -8,9 +8,23 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import GeeksModel
+from .forms import GeeksForm
 
 def home(request):
-    return render(request, 'users/home.html')
+    if request.method == 'POST':
+        form = GeeksForm(request.POST, request.FILES)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            hotel_Main_Img = form.cleaned_data['original_img']
+            geeks_object = GeeksModel(name=name, hotel_Main_Img=hotel_Main_Img)
+            geeks_object.save()  # date字段将自动设置为当前时间
+            return HttpResponse("Data saved successfully.")
+    else:
+        form = GeeksForm()
+    return render(request, 'users/home.html', {'form': form})
 
 
 class RegisterView(View):

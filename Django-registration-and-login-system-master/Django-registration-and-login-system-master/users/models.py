@@ -23,3 +23,8 @@ class Profile(models.Model):
             new_img = (100, 100)
             img.thumbnail(new_img)
             img.save(self.avatar.path)
+
+class GeeksModel(models.Model):
+    date = models.DateTimeField(auto_now_add=True)  # 使用DateTimeField，并添加auto_now_add=True
+    name = models.CharField(max_length=50)
+    original_img = models.ImageField(upload_to='images/')
