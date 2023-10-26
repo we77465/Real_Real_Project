@@ -4,12 +4,17 @@
 * (date 圖片 說明)
 
 先建立帳號密碼的DB (done)
+
 create account (最簡單的done)
+
 讓使用者登入的時候 並且可以上傳檔案 (done)
+
+login (done)
 next 再登入的時候 生成浮水印 (這個生成浮水印的時候 如有DB有該浮水印的話 就要先抓DB裡面的資料? 並且沒有資料的話 要先生成 並把data加在DB裡面)
+
 next 再用listview 顯示圖片並下載圖片
 
-login (processing)
+
 
 上傳圖片
 
