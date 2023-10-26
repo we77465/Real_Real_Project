@@ -13,7 +13,7 @@ login (done)
 next 再登入的時候 生成浮水印 (這個生成浮水印的時候 如有DB有該浮水印的話 就要先抓DB裡面的資料? 並且沒有資料的話 要先生成 並把data加在DB裡面)
 
 next 再用listview 顯示圖片並下載圖片
-
+(顯示圖片 https://stackoverflow.com/questions/70009290/how-can-i-display-images-from-my-django-db)
 
 
 上傳圖片
