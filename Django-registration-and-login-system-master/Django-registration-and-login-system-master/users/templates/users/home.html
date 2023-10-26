@@ -11,6 +11,14 @@
         <p class="lead">
             {% if user.is_authenticated %}
                 <form method = "post" enctype="multipart/form-data">
+                    <ul>
+                        {% for one_img in Secoriginal_img %}
+                            <li>
+                                <p>Name: {{ one_img.name }}</p>
+                                <img src="{{ one_img.original_img.url }}" alt="" width="100px">
+                            </li>
+                        {% endfor %}
+                    </ul>
                     {% csrf_token %}
                     {{ form.as_p }}
                 <button type="submit">Upload</button>

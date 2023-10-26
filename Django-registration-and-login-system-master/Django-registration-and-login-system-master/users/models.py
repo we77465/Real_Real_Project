@@ -28,3 +28,5 @@ class GeeksModel(models.Model):
     date = models.DateTimeField(auto_now_add=True)  # 使用DateTimeField，并添加auto_now_add=True
     name = models.CharField(max_length=50)
     original_img = models.ImageField(upload_to='images/')
+    def __str__(self):
+        return self.name

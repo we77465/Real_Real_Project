@@ -21,10 +21,15 @@ def home(request):
             original_img = form.cleaned_data['original_img']
             geeks_object = GeeksModel(name=name, original_img=original_img)
             geeks_object.save()  # date字段将自动设置为当前时间
-            return HttpResponse("Data saved successfully.")
-    else:
-        form = GeeksForm()
-    return render(request, 'users/home.html', {'form': form})
+        else:
+            form = GeeksForm()
+    Secoriginal_img = GeeksModel.objects.all()
+    context = {
+        'Secoriginal_img': Secoriginal_img,
+        'form': GeeksForm(),
+    }
+    
+    return render(request, 'users/home.html', context)
 
 
 class RegisterView(View):
