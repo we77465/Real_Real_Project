@@ -11,11 +11,13 @@
         <p class="lead">
             {% if user.is_authenticated %}
                 <form method = "post" enctype="multipart/form-data">
+
                     <ul>
-                        {% for one_of_GeeksModel_used in GeeksModel_used %}
+                        {% for one_of_Uploade_used in Uploade_used %}
                             <li>
-                                <p>Name: {{ one_of_GeeksModel_used.descript }}</p>
-                                <img src="{{ one_of_GeeksModel_used.original_img.url }}" alt="" width="100px">
+                                <p>descript: {{ one_of_Uploade_used.descript }}</p>
+                                <p>password: {{ one_of_Uploade_used.password }}</p>
+                                <img src="{{ one_of_Uploade_used.original_img.url }}" alt="" width="100px">
                             </li>
                         {% endfor %}
                     </ul>
@@ -30,3 +32,5 @@
     </div>
 
 {% endblock content %}
+
+

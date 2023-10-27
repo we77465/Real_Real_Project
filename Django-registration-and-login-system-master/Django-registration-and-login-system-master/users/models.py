@@ -24,8 +24,8 @@ class Profile(models.Model):
             img.thumbnail(new_img)
             img.save(self.avatar.path)
 
-class GeeksModel(models.Model):
-    #user_id = models.CharField(max_length=50)
+class UploadeModel(models.Model):
+    user_id = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)  # 使用DateTimeField，并添加auto_now_add=True
     descript = models.CharField(max_length=50)

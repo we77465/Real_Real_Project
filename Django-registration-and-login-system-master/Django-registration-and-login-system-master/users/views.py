@@ -10,26 +10,25 @@ from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import GeeksModel
-from .forms import GeeksForm
+from .models import UploadeModel
+from .forms import UploadeForm
 
 def home(request):
     if request.method == 'POST':
-        form = GeeksForm(request.POST,request.POST, request.FILES)
+        form = UploadeForm(request.POST, request.FILES)
         if form.is_valid():
-            #需要拿到user_id 要從longin那邊看
             descript = form.cleaned_data['descript']
             password = form.cleaned_data['password']
             original_img = form.cleaned_data['original_img']
-            geeks_object = GeeksModel(descript=descript, original_img=original_img,password=password)
+            geeks_object = UploadeModel(descript=descript,password = password,
+                                         original_img=original_img,user_id = request.user)
             geeks_object.save()  # date字段将自动设置为当前时间
         else:
-            form = GeeksForm()
-    GeeksModel_used = GeeksModel.objects.all()
+            form = UploadeForm()
+    Uploade_used = UploadeModel.objects.all()
     context = {
-
-        'GeeksModel_used': GeeksModel_used,
-        'form': GeeksForm(),
+        'Uploade_used': Uploade_used,
+        'form': UploadeForm(),
     }
     
     return render(request, 'users/home.html', context)

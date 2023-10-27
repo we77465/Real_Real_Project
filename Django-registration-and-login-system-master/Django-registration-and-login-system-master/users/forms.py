@@ -2,12 +2,12 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Profile
-from .models import GeeksModel
+from .models import UploadeModel
 
-class GeeksForm(forms.ModelForm):
+class UploadeForm(forms.ModelForm):
     class Meta:
-        model = GeeksModel
-        fields = ['descript', 'password' ,'original_img']  # 从表单中移除'date'字段
+        model = UploadeModel
+        fields = ['password','descript','original_img']  # 从表单中移除'date'字段
 
 class RegisterForm(UserCreationForm):
     # fields we want to include and customize in our form
