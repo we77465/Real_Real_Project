@@ -2,7 +2,7 @@
 {% block title %} Home Page {% endblock title%}
 {% block content %}
     <div class="jumbotron">
-        <h1 class="display-4">Welcome, {{user.first_name.title|default:'Guest'}}</h1>
+        <h1 class="display-4">Welcome, {{user.username.title|default:'Guest'}}</h1>
         <p class="lead">
             This is <b>user registration and login system</b> build with django which is
             a Python-based free and open-source web framework that follows the model–template–views architectural pattern.
@@ -12,15 +12,17 @@
             {% if user.is_authenticated %}
                 <form method = "post" enctype="multipart/form-data">
 
-                    <ul>
+                    <tr>
                         {% for one_of_Uploade_used in Uploade_used %}
-                            <li>
+                            <td>
+                                <p>user_id: {{ one_of_Uploade_used.user_id }}</p>
                                 <p>descript: {{ one_of_Uploade_used.descript }}</p>
-                                <p>password: {{ one_of_Uploade_used.password }}</p>
-                                <img src="{{ one_of_Uploade_used.original_img.url }}" alt="" width="100px">
-                            </li>
+                                <p>date: {{ one_of_Uploade_used.date }}</p>
+                                <p>========================================</p>
+                                <!-- <img src="{{ one_of_Uploade_used.original_img.url }}" alt="" width="100px"> -->
+                            </td>
                         {% endfor %}
-                    </ul>
+                    </tr>
                     {% csrf_token %}
                     {{ form.as_p }}
                 <button type="submit">Upload</button>
