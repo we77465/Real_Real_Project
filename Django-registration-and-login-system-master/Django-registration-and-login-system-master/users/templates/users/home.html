@@ -18,8 +18,13 @@
                                 <p>user_id: {{ one_of_Uploade_used.user_id }}</p>
                                 <p>descript: {{ one_of_Uploade_used.descript }}</p>
                                 <p>date: {{ one_of_Uploade_used.date }}</p>
-                                <p>========================================</p>
                                 <!-- <img src="{{ one_of_Uploade_used.original_img.url }}" alt="" width="100px"> -->
+
+                                <!-- if 按了之後要進行embedding 再download embedding後的圖片-->
+                                <button type="button" class="download-button" data-url="{{ one_of_Uploade_used.original_img.url }}">下载图片</button>
+                                <p>========================================</p>
+                                
+                                
                             </td>
                         {% endfor %}
                     </tr>
@@ -33,6 +38,27 @@
         </p>
     </div>
 
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const downloadButtons = document.querySelectorAll(".download-button");
+    
+        downloadButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                const imageUrl = button.getAttribute("data-url");
+                const a = document.createElement("a");
+                a.href = imageUrl;
+                a.download = "image.jpg"; // 设置下载的文件名
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+    });
+    </script>
 {% endblock content %}
+
+
 
 
