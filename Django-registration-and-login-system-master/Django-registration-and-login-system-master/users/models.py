@@ -25,8 +25,10 @@ class Profile(models.Model):
             img.save(self.avatar.path)
 
 class GeeksModel(models.Model):
+    #user_id = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)  # 使用DateTimeField，并添加auto_now_add=True
-    name = models.CharField(max_length=50)
+    descript = models.CharField(max_length=50)
     original_img = models.ImageField(upload_to='images/')
     def __str__(self):
         return self.name

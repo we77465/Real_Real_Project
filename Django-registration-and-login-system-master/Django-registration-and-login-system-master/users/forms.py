@@ -7,7 +7,7 @@ from .models import GeeksModel
 class GeeksForm(forms.ModelForm):
     class Meta:
         model = GeeksModel
-        fields = ['name', 'original_img']  # 从表单中移除'date'字段
+        fields = ['descript', 'password' ,'original_img']  # 从表单中移除'date'字段
 
 class RegisterForm(UserCreationForm):
     # fields we want to include and customize in our form

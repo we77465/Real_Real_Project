@@ -15,17 +15,20 @@ from .forms import GeeksForm
 
 def home(request):
     if request.method == 'POST':
-        form = GeeksForm(request.POST, request.FILES)
+        form = GeeksForm(request.POST,request.POST, request.FILES)
         if form.is_valid():
-            name = form.cleaned_data['name']
+            #需要拿到user_id 要從longin那邊看
+            descript = form.cleaned_data['descript']
+            password = form.cleaned_data['password']
             original_img = form.cleaned_data['original_img']
-            geeks_object = GeeksModel(name=name, original_img=original_img)
+            geeks_object = GeeksModel(descript=descript, original_img=original_img,password=password)
             geeks_object.save()  # date字段将自动设置为当前时间
         else:
             form = GeeksForm()
-    Secoriginal_img = GeeksModel.objects.all()
+    GeeksModel_used = GeeksModel.objects.all()
     context = {
-        'Secoriginal_img': Secoriginal_img,
+
+        'GeeksModel_used': GeeksModel_used,
         'form': GeeksForm(),
     }
     

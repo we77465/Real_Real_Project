@@ -12,10 +12,10 @@
             {% if user.is_authenticated %}
                 <form method = "post" enctype="multipart/form-data">
                     <ul>
-                        {% for one_img in Secoriginal_img %}
+                        {% for one_of_GeeksModel_used in GeeksModel_used %}
                             <li>
-                                <p>Name: {{ one_img.name }}</p>
-                                <img src="{{ one_img.original_img.url }}" alt="" width="100px">
+                                <p>Name: {{ one_of_GeeksModel_used.descript }}</p>
+                                <img src="{{ one_of_GeeksModel_used.original_img.url }}" alt="" width="100px">
                             </li>
                         {% endfor %}
                     </ul>
