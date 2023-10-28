@@ -127,39 +127,40 @@ from django.conf import settings
 from blind_watermark import WaterMark
 from io import BytesIO
 import os
+import re
 
-def download_image(request, image_id): #one_of_Uploade_used.original_img.url
+def download_image(request, image_id):
     try:
-        image_obj = UploadeModel.objects.get(id=image_id)  # 替换 YourModel 和 id 根据你的模型和数据来定
+        image_obj = UploadeModel.objects.get(id=image_id)
     except UploadeModel.DoesNotExist:
         return HttpResponse("Image not found", status=404)
 
     image_path = os.path.join(settings.MEDIA_ROOT, image_obj.original_img.name)
-    image_output = os.path.join(settings.MEDIA_ROOT,'images', 'watermarked', image_obj.original_img.name)
-    print(image_output)
+    image_path = image_path.encode('utf-8').decode('utf-8')
+    fixed_path = re.sub(r'/', r'\\', image_path)
+
+
+
+    #C:\Users\kenan\Desktop\RealProject\Real_Real_Project\Django-registration-and-login-system-master\Django-registration-and-login-system-master\media\images\未命名_w6FeVlw.png'
+    #C:\Users\kenan\Desktop\RealProject\Real_Real_Project\Django-registration-and-login-system-master\Django-registration-and-login-system-master\media\images\未命名_w6FeVlw.png
+
+
     # 添加水印
-
-    wm = str(image_obj.user_id)  # 将用户ID转换为整数
-    password_wm = 123  # 水印密码
+    wm = str(image_obj.user_id)
+    password_wm = 123
     bwm = WaterMark(password_img=1, password_wm=password_wm)
-    bwm.read_img(image_path)
+    bwm.read_img(fixed_path)
     bwm.read_wm(wm, mode='str')
-    
-    
-
-    # 添加水印到图像
-    bwm.embed(image_path)
-    len_wm = len(bwm.wm_bit)
-    print(len_wm)
-
-    print("done")
+    bwm.embed(fixed_path)  # 在原始图像上添加水印
 
     # 读取带水印的图像
     with open(image_path, 'rb') as image_file:
-        response = HttpResponse(image_file.read(), content_type="image/jpeg")
-        response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
-        return response
+        image_data = image_file.read()
 
+    # 返回带有水印的图像数据
+    response = HttpResponse(image_data, content_type="image/jpeg")
+    response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
+    return response
 #from django.conf import settings
 #import os
 # def download_image(request):
