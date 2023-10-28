@@ -21,7 +21,9 @@
                                 <!-- <img src="{{ one_of_Uploade_used.original_img.url }}" alt="" width="100px"> -->
 
                                 <!-- if 按了之後要進行embedding 再download embedding後的圖片-->
-                                <button type="button" class="download-button" data-url="{{ one_of_Uploade_used.original_img.url }}">下载图片</button>
+                                <!-- <button type="button" class="download-button" data-url="{{ one_of_Uploade_used.original_img.url }}">下载图片</button> -->
+                                <button type="button" class="download-button" data-image-id="{{ one_of_Uploade_used.id }}" data-url="{{ one_of_Uploade_used.original_img.url }}">下载图片</button>
+
                                 <p>========================================</p>
                                 
                                 
@@ -40,23 +42,40 @@
 
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const downloadButtons = document.querySelectorAll(".download-button");
-    
-        downloadButtons.forEach(function(button) {
-            button.addEventListener("click", function() {
-                const imageUrl = button.getAttribute("data-url");
-                const a = document.createElement("a");
-                a.href = imageUrl;
-                a.download = "image.jpg"; // 设置下载的文件名
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const downloadButtons = document.querySelectorAll(".download-button");
+
+    downloadButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            const imageUrl = button.getAttribute("data-url");
+            const imageId = button.getAttribute("data-image-id");
+
+            // 发送HTTP请求到Django视图，并将image_id传递过去
+            fetch(`/download-image/${imageId}/`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    }
+                    throw new Error('网络请求失败');
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'image.jpg';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         });
     });
-    </script>
+});
+
+
+</script>
 {% endblock content %}
 
 

@@ -31,4 +31,4 @@ class UploadeModel(models.Model):
     descript = models.CharField(max_length=50)
     original_img = models.ImageField(upload_to='images/')
     def __str__(self):
-        return self.name
+        return self.user_id
