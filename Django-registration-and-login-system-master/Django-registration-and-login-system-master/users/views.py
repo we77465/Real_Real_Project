@@ -138,23 +138,29 @@ def download_image(request, image_id):
     image_path = os.path.join(settings.MEDIA_ROOT, image_obj.original_img.name)
     image_path = image_path.encode('utf-8').decode('utf-8')
     fixed_path = re.sub(r'/', r'\\', image_path)
+    print(fixed_path)
+
+    image_output_path = os.path.join(settings.MEDIA_ROOT,'After_mark_images')
+    target_path = os.path.join(image_output_path, os.path.basename(image_path))
+    #image_output_path = image_output_path.encode('utf-8').decode('utf-8')
+    #fixed_output_path = re.sub(r'/', r'\\', image_output_path)
+    print(target_path)
 
 
 
-    #C:\Users\kenan\Desktop\RealProject\Real_Real_Project\Django-registration-and-login-system-master\Django-registration-and-login-system-master\media\images\未命名_w6FeVlw.png'
-    #C:\Users\kenan\Desktop\RealProject\Real_Real_Project\Django-registration-and-login-system-master\Django-registration-and-login-system-master\media\images\未命名_w6FeVlw.png
-
-
+    print("start")
     # 添加水印
     wm = str(image_obj.user_id)
-    password_wm = 123
+    password_wm = int(image_obj.password)
     bwm = WaterMark(password_img=1, password_wm=password_wm)
     bwm.read_img(fixed_path)
     bwm.read_wm(wm, mode='str')
-    bwm.embed(fixed_path)  # 在原始图像上添加水印
-
+    bwm.embed(target_path)  # 在原始图像上添加水印
+    print("done")
+    len_wm = len(bwm.wm_bit) #要丟到DB裡面
+    print("lennn : ",len_wm)
     # 读取带水印的图像
-    with open(image_path, 'rb') as image_file:
+    with open(target_path, 'rb') as image_file:
         image_data = image_file.read()
 
     # 返回带有水印的图像数据
