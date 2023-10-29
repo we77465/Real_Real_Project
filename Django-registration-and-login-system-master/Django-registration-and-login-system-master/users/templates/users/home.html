@@ -15,6 +15,9 @@
                     <tr>
                         {% for one_of_Uploade_used in Uploade_used %}
                             <td>
+                                {% if user.is_staff %}
+                                    <p>Password: {{ one_of_Uploade_used.password }}</p>
+                                {% endif %}
                                 <p>user_id: {{ one_of_Uploade_used.user_id }}</p>
                                 <p>descript: {{ one_of_Uploade_used.descript }}</p>
                                 <p>date: {{ one_of_Uploade_used.date }}</p>
