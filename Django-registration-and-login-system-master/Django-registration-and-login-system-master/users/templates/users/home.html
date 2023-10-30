@@ -60,7 +60,7 @@
                     if (response.ok) {
                         return response.blob();
                     }
-                    throw new Error('网络请求失败');
+                    throw new Error('error');
                 })
                 .then(blob => {
                     const url = window.URL.createObjectURL(blob);

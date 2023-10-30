@@ -5,13 +5,15 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
-from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
-
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import UploadeModel
-from .forms import UploadeForm
+from django.conf import settings
+from datetime import datetime
+from blind_watermark import WaterMark
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm, UploadeForm
+from .models import UploadeModel,Profile
+import os
+import re
+
 
 def home(request):
     if request.method == 'POST':
@@ -120,17 +122,10 @@ def profile(request):
 
 
 
-
-
-from django.http import HttpResponse
-from django.conf import settings
-from blind_watermark import WaterMark
-from io import BytesIO
-import os
-import re
-
+from datetime import datetime,timezone,timedelta
 def download_image(request, image_id):
     try:
+        Profile_all = Profile.objects.all()
         image_obj = UploadeModel.objects.get(id=image_id)
     except UploadeModel.DoesNotExist:
         return HttpResponse("Image not found", status=404)
@@ -142,15 +137,21 @@ def download_image(request, image_id):
 
     image_output_path = os.path.join(settings.MEDIA_ROOT,'After_mark_images')
     target_path = os.path.join(image_output_path, os.path.basename(image_path))
-    #image_output_path = image_output_path.encode('utf-8').decode('utf-8')
-    #fixed_output_path = re.sub(r'/', r'\\', image_output_path)
     print(target_path)
 
 
-
+    
     print("start")
     # 添加水印
-    wm = str(image_obj.user_id)
+    wm =("使用者ID: ")
+    current_user = request.user
+    wm += str(current_user.username)
+    wm += str("\n 下載時間 : ")
+    dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
+    dt2 = dt1.astimezone(timezone(timedelta(hours=8))) # 轉換時區
+    print(dt2)
+    #wm += str(datetime.now())
+    wm += str(dt2)
     password_wm = int(image_obj.password)
     bwm = WaterMark(password_img=1, password_wm=password_wm)
     bwm.read_img(fixed_path)
@@ -159,14 +160,15 @@ def download_image(request, image_id):
     print("done")
     len_wm = len(bwm.wm_bit) #要丟到DB裡面
     print("lennn : ",len_wm)
-    # 读取带水印的图像
+
     with open(target_path, 'rb') as image_file:
         image_data = image_file.read()
 
-    # 返回带有水印的图像数据
+    # 返回
     response = HttpResponse(image_data, content_type="image/jpeg")
     response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
     return response
+
 #from django.conf import settings
 #import os
 # def download_image(request):
