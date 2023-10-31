@@ -12,12 +12,12 @@
 ## 使用
 * how to use?
 
-1. python3 manage.py makemigrations
-2. python3 manage.py migrate
-3. python3 manage.py runserver
-4. python3 manage.py createsuperuser (如果是superuser可以在前端看到密碼)
-
-
+```
+$ pip install -r requirements.txt
+$ python manage.py migrate
+$ python manage.py createsuperuser
+$ python manage.py runserver
+```
 (前端進度緩慢)
 
 
