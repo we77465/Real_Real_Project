@@ -24,10 +24,11 @@ def home(request):
             original_img = form.cleaned_data['original_img']
             geeks_object = UploadeModel(descript=descript,password = password,
                                          original_img=original_img,user_id = request.user)
-            geeks_object.save()  # date字段将自动设置为当前时间
+            geeks_object.save() 
         else:
             form = UploadeForm()
     Uploade_used = UploadeModel.objects.all()
+    #把Upload_used的資料傳給前端 如果要用就拿Uploade_used
     context = {
         'Uploade_used': Uploade_used,
         'form': UploadeForm(),
@@ -142,6 +143,7 @@ def download_image(request, image_id):
 
     
     print("start")
+
     # 添加水印
     wm =("使用者ID: ")
     current_user = request.user
@@ -149,18 +151,18 @@ def download_image(request, image_id):
     wm += str("\n 下載時間 : ")
     dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
     dt2 = dt1.astimezone(timezone(timedelta(hours=8))) # 轉換時區
-    print(dt2)
-    #wm += str(datetime.now())
     wm += str(dt2)
     password_wm = int(image_obj.password)
     bwm = WaterMark(password_img=1, password_wm=password_wm)
     bwm.read_img(fixed_path)
     bwm.read_wm(wm, mode='str')
     bwm.embed(target_path)  # 在原始图像上添加水印
-    print("done")
     len_wm = len(bwm.wm_bit) #要丟到DB裡面
-    print("lennn : ",len_wm)
 
+
+
+    print("lennn : ",len_wm)
+    print("done")
     with open(target_path, 'rb') as image_file:
         image_data = image_file.read()
 
@@ -170,46 +172,19 @@ def download_image(request, image_id):
     return response
 
 
+
 def delete_image(request, image_id):
     try:
         instance = UploadeModel.objects.get(id=image_id)
         instance.delete()
     except UploadeModel.DoesNotExist:
-        # 处理图像不存在的情况，可以显示错误消息或采取其他措施
         pass
 
-    # 重新获取图像对象列表
     Uploade_used = UploadeModel.objects.all()
     context = {
         'Uploade_used': Uploade_used,
         'form': UploadeForm(),
     }
 
-    # 重定向到 'users/home.html'，并传递更新后的上下文数据
+
     return render(request, 'users/home.html', context)
-#from django.conf import settings
-#import os
-# def download_image(request):
-#     image_url = request.GET.get('image_url')
-#     image_path = os.path.join(settings.MEDIA_ROOT, image_url)
-    
-#     with open(image_path, 'rb') as image_file:
-#         response = HttpResponse(image_file.read(), content_type="image/jpeg")
-#         response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
-#         return response
-
-# from django.http import HttpResponse 這邊為chat GPT生成(未確定可行)的連到DB尋找對應的圖片
-# from django.conf import settings
-# from yourapp.models import YourModel  # 导入包含图像的模型
-
-# def download_image(request, image_id):
-#     try:
-#         image_obj = YourModel.objects.get(id=image_id)  # 替换 YourModel 和 id 根据你的模型和数据来定
-#     except YourModel.DoesNotExist:
-#         return HttpResponse("Image not found", status=404)
-
-#     image_content = image_obj.image_field.read()  # 从数据库中读取图像数据
-
-#     response = HttpResponse(image_content, content_type="image/jpeg")
-#     response['Content-Disposition'] = f'attachment; filename={image_obj.image_field.name}'
-#     return response
