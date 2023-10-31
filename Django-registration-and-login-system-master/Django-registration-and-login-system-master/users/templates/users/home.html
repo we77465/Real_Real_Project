@@ -17,8 +17,6 @@
                             <td>
                                 {% if user.is_staff %}
                                     <p>Password: {{ one_of_Uploade_used.password }}</p>
-                                    <button class="delete-button" data-image-id="{{ one_of_Uploade_used.id }}" data-url="{{ one_of_Uploade_used.original_img.url }}" onclick="confirmDelete(this)">删除图片</button>
-
                                 {% endif %}
                                 <p>user_id: {{ one_of_Uploade_used.user_id }}</p>
                                 <p>descript: {{ one_of_Uploade_used.descript }}</p>
@@ -28,7 +26,9 @@
                                 <!-- if 按了之後要進行embedding 再download embedding後的圖片-->
                                 <!-- <button type="button" class="download-button" data-url="{{ one_of_Uploade_used.original_img.url }}">下载图片</button> -->
                                 <button type="button" class="delete-button" data-image-id="{{ one_of_Uploade_used.id }}" data-url="{{ one_of_Uploade_used.original_img.url }}">下載圖片</button>
-
+                                {% if user.is_staff %}
+                                    <button class="delete-button" data-image-id="{{ one_of_Uploade_used.id }}" data-url="{{ one_of_Uploade_used.original_img.url }}" onclick="confirmDelete(this)">删除图片</button>
+                                {% endif %}
                                 <p>========================================</p>
                                 
                                 
@@ -48,7 +48,7 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     const downloadButtons = document.querySelectorAll(".download-button");
 
     downloadButtons.forEach(function(button) {
@@ -80,7 +80,6 @@
 });
 
 
-
 function confirmDelete(button) {
     const imageId = button.getAttribute("data-image-id");
     if (confirm("確定刪除?")) {
@@ -104,6 +103,7 @@ function deleteImage(imageId, button) {
             console.error(error);
         });
 }
+
 
 </script>
 {% endblock content %}
