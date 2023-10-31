@@ -12,10 +12,10 @@
 ## 使用
 * how to use?
 
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py runserver
-python3 manage.py createsuperuser (如果是superuser可以在前端看到密碼)
+1. python3 manage.py makemigrations
+2. python3 manage.py migrate
+3. python3 manage.py runserver
+4. python3 manage.py createsuperuser (如果是superuser可以在前端看到密碼)
 
 
 (前端進度緩慢)
