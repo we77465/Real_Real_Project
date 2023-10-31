@@ -169,6 +169,24 @@ def download_image(request, image_id):
     response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
     return response
 
+
+def delete_image(request, image_id):
+    try:
+        instance = UploadeModel.objects.get(id=image_id)
+        instance.delete()
+    except UploadeModel.DoesNotExist:
+        # 处理图像不存在的情况，可以显示错误消息或采取其他措施
+        pass
+
+    # 重新获取图像对象列表
+    Uploade_used = UploadeModel.objects.all()
+    context = {
+        'Uploade_used': Uploade_used,
+        'form': UploadeForm(),
+    }
+
+    # 重定向到 'users/home.html'，并传递更新后的上下文数据
+    return render(request, 'users/home.html', context)
 #from django.conf import settings
 #import os
 # def download_image(request):
