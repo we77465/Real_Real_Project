@@ -11,7 +11,7 @@
 (但取得浮水印的會是在我們做的GUI裡面執行(到時候會丟上來) 目前正在研究如何在截圖的時候自動得到參數)
 ## 使用
 * how to use?
-
+這邊的requeirements.txt是我有裝的東西 可能有點多 自行斟酌
 ```
 $ pip install -r requirements.txt
 $ python manage.py migrate
