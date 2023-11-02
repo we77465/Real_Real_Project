@@ -188,3 +188,31 @@ def delete_image(request, image_id):
 
 
     return render(request, 'users/home.html', context)
+
+#from django.conf import settings
+#import os
+# def download_image(request):
+#     image_url = request.GET.get('image_url')
+#     image_path = os.path.join(settings.MEDIA_ROOT, image_url)
+    
+#     with open(image_path, 'rb') as image_file:
+#         response = HttpResponse(image_file.read(), content_type="image/jpeg")
+#         response['Content-Disposition'] = f'attachment; filename={os.path.basename(image_path)}'
+#         return response
+
+# from django.http import HttpResponse 這邊為chat GPT生成(未確定可行)的連到DB尋找對應的圖片
+# from django.conf import settings
+# from yourapp.models import YourModel  # 导入包含图像的模型
+
+# def download_image(request, image_id):
+#     try:
+#         image_obj = YourModel.objects.get(id=image_id)  # 替换 YourModel 和 id 根据你的模型和数据来定
+#     except YourModel.DoesNotExist:
+#         return HttpResponse("Image not found", status=404)
+
+#     image_content = image_obj.image_field.read()  # 从数据库中读取图像数据
+
+#     response = HttpResponse(image_content, content_type="image/jpeg")
+#     response['Content-Disposition'] = f'attachment; filename={image_obj.image_field.name}'
+#     return response
+

@@ -37,3 +37,7 @@ class DownloadModel(models.Model):
     user_id = models.CharField(max_length=50)
     download_time = models.CharField(max_length=50)
     download_wm_len = models.CharField(max_length=50)
+
+
+
+    
