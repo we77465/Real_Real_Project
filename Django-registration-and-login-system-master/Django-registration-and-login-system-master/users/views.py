@@ -132,7 +132,7 @@ def download_image(request, image_id):
         return HttpResponse("Image not found", status=404)
 
     image_path = os.path.join(settings.MEDIA_ROOT, image_obj.original_img.name)
-    image_path = image_path.encode('utf-8').decode('utf-8')
+
     fixed_path = re.sub(r'/', r'\\', image_path)
     print(fixed_path)
 
@@ -140,18 +140,18 @@ def download_image(request, image_id):
     target_path = os.path.join(image_output_path, os.path.basename(image_path))
     print(target_path)
 
-
     
     print("start")
 
     # 添加水印
-    wm =("使用者ID: ")
+    wm =("User_ID: ")
     current_user = request.user
     wm += str(current_user.username)
-    wm += str("\n 下載時間 : ")
+    wm += str("\n download_time : ")
     dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
     dt2 = dt1.astimezone(timezone(timedelta(hours=8))) # 轉換時區
     wm += str(dt2)
+    
     password_wm = int(image_obj.password)
     bwm = WaterMark(password_img=1, password_wm=password_wm)
     bwm.read_img(fixed_path)

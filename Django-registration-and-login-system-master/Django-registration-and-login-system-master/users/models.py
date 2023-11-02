@@ -33,7 +33,7 @@ class UploadeModel(models.Model):
     def __str__(self):
         return self.user_id
     
-#class DownloadModel(models.Model):
-#    user_id = models.CharField(max_length=50)
-#    download_time = models.CharField(max_length=50)
-#    download_wm_len = models.CharField(max_length=50)
+class DownloadModel(models.Model):
+    user_id = models.CharField(max_length=50)
+    download_time = models.CharField(max_length=50)
+    download_wm_len = models.CharField(max_length=50)
