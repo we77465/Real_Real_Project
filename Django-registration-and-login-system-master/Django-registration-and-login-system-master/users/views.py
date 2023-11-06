@@ -152,7 +152,7 @@ def download_image(request, image_id):
     dt2 = dt1.astimezone(timezone(timedelta(hours=8))) # 轉換時區
     wm += str(dt2)
     
-    password_wm = int(image_obj.password)
+    password_wm = image_obj.password
     bwm = WaterMark(password_img=1, password_wm=password_wm)
     bwm.read_img(fixed_path)
     bwm.read_wm(wm, mode='str')
