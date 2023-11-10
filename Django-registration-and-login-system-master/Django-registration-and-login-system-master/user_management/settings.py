@@ -46,6 +46,11 @@ INSTALLED_APPS = [
     'social_django',
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'your_app/static'),
+    # Add other paths if needed
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,6 +1,8 @@
+
 {% extends "users/base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
+
     <div class="jumbotron">
         <h1 class="display-4">Welcome, {{user.username.title|default:'Guest'}}</h1>
         <p class="lead">
@@ -9,6 +11,11 @@
         </p>
         <hr class="my-4">
         <p class="lead">
+        <div id="loading-screen">
+            <div class="loader">
+                <p>123123</p>
+            </div>
+        </div>
             {% if user.is_authenticated %}
                 <form method = "post" enctype="multipart/form-data">
 
@@ -59,6 +66,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const imageUrl = button.getAttribute("data-url");
             const imageId = button.getAttribute("data-image-id");
 
+            // 显示加载画面
+            showLoadingScreen();
+
             // 发送HTTP请求到Django视图，并将image_id传递过去
             fetch(`/download-image/${imageId}/`)
                 .then(response => {
@@ -74,13 +84,31 @@ document.addEventListener("DOMContentLoaded", function() {
                     a.download = 'image.jpg';
                     a.click();
                     window.URL.revokeObjectURL(url);
+
+                    // 隐藏加载画面
+                    hideLoadingScreen();
                 })
                 .catch(error => {
                     console.error(error);
+
+                    // 隐藏加载画面（即使出现错误）
+                    hideLoadingScreen();
                 });
         });
     });
+
+    function showLoadingScreen() {
+        const loadingScreen = document.getElementById('loading-screen');
+        console.log("123123")
+        loadingScreen.style.display = 'flex';
+}
+
+    function hideLoadingScreen() {
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.style.display = 'none';
+}
 });
+
 
 
 
