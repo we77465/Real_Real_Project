@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'your_app/static'),
+    os.path.join(BASE_DIR, 'users', 'static'),
     # Add other paths if needed
 ]
 
