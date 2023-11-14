@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Profile
 from .models import UploadeModel
+from django.core.validators import MinLengthValidator
 
 class UploadeForm(forms.ModelForm):
     class Meta:
         model = UploadeModel
-        fields = ['password','descript','original_img']  # 从表单中移除'date'字段
+        fields = ['password','descript','original_img']  # 移除'date'
 
 class RegisterForm(UserCreationForm):
     # fields we want to include and customize in our form
@@ -21,8 +22,9 @@ class RegisterForm(UserCreationForm):
                                 widget=forms.TextInput(attrs={'placeholder': 'Last Name',
                                                               'class': 'form-control',
                                                               }))
-    username = forms.CharField(max_length=100,
+    username = forms.CharField(max_length=9,  # 设置最大长度为 9
                                required=True,
+                               validators=[MinLengthValidator(limit_value=9)],
                                widget=forms.TextInput(attrs={'placeholder': 'Username',
                                                              'class': 'form-control',
                                                              }))

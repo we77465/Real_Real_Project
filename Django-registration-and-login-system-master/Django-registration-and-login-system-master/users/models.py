@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 # Extending User Model Using a One-To-One Link
 class Profile(models.Model):
@@ -25,7 +25,7 @@ class Profile(models.Model):
             img.save(self.avatar.path)
 
 class UploadeModel(models.Model):
-    user_id = models.CharField(max_length=50)
+    user_id = models.CharField(max_length=9, validators=[MinLengthValidator(limit_value=9), MaxLengthValidator(limit_value=9)])
     password = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)  # 使用DateTimeField，并添加auto_now_add=True
     descript = models.CharField(max_length=50)
